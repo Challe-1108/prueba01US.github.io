@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Virtual</title>
+    <link rel="stylesheet" href="estilos/aulavirtual.css">
+</head>
+
+<body>
+
+    <header>
+
+        <h1>Universal Schools</h1>
+
+        <p id="reloj"></p>
+
+    </header>
+
+    <div class="contenedor">
+
+        <aside>
+
+            <div class="seccion">
+
+                <h3>Cursos</h3>
+
+                <a href="#">Ciencia y Tecnología</a>
+                <a href="#">Humanidadeds</a>
+                <a href="#">Ciencias Sociales</a>
+                <a href="#">Lenguaje</a>
+                <a href="#">Inglés</a>
+
+            </div>
+
+            <div class="seccion">
+
+                <h3>Notas</h3>
+
+                <a href="#">Puntaje Semanal</a>
+                <a href="#">Puntaje Simulacro</a>
+                <a href="#">Examen Bimestral</a>
+
+            </div>
+
+            <div class="seccion">
+
+                <h3>Material de Estudio</h3>
+
+                <a href="#">Prácticas</a>
+                <a href="#">Tareas</a>
+                <a href="#">PDFs</a>
+                <a href="#">Videos</a>
+
+            </div>
+
+        </aside>
+
+        <main>
+
+            <div class="panel">
+
+                <h2>Aula Virtual Universal Schools</h2>
+
+                <div class="mensaje">
+
+                    Diseño de la página en proceso
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script>
+
+        function actualizarHora() {
+
+            const ahora = new Date();
+
+            document.getElementById("reloj")
+                .textContent = ahora.toLocaleTimeString();
+
+        }
+
+        setInterval(actualizarHora, 1000);
+        actualizarHora();
+
+    </script>
+
+</body>
+
+</html>

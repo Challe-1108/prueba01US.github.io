@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresantes 2024 - Universal Schools</title>
+
+    <link rel="stylesheet" href="estilos/ingresantes.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Universal Schools</h1>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="matriculas.html">Matrículas</a>
+        </nav>
+    </header>
+
+    <section class="cabecera">
+
+        <h2>Ingresantes 2024</h2>
+
+        <p>
+            Nuestros estudiantes que alcanzaron su ingreso
+            a la Universidad Nacional de Trujillo en los procesos
+            2024-1 y 2024-2. ¡Felicitaciones a todos por su esfuerzo y dedicación!
+        </p>
+
+    </section>
+
+    <section class="galeria">
+
+        <div class="card">
+            <img src="imagenes/ingresantes_2024/24-1/aceb241.jpg" alt="Ingresante 2024-1: ACEB241">
+        </div>
+
+        <div class="card">
+            <img src="imagenes/ingresantes_2024/24-1/crd241.jpg" alt="Ingresante 2024-1: CRD241">
+        </div>
+
+        <div class="card">
+            <img src="imagenes/ingresantes_2024/24-1/dlcal241.jpg" alt="Ingresante 2024-1: DLCAL241">
+        </div>
+
+        <div class="card">
+            <img src="imagenes/ingresantes_2024/24-2/caw242.jpg" alt="Ingresante 2024-2: CAW242">
+        </div>
+
+        <div class="card">
+            <img src="imagenes/ingresantes_2024/24-2/mms242.jpg" alt="Ingresante 2024-2: MMS242">
+        </div>
+
+        <div class="card">
+            <img src="imagenes/ingresantes_2024/24-2/tgf242.jpg" alt="Ingresante 2024-2: TGF242">
+        </div>
+    </section>
+
+
+
+    <div id="modal" class="modal">
+
+        <span class="cerrar">&times;</span>
+
+        <img id="imagenGrande" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Imagen ampliada">
+
+    </div>
+
+    <footer>
+
+        <p>
+            © 2026 Universal Schools - Todos los derechos reservados
+        </p>
+
+    </footer>
+
+    <script>
+
+        const modal = document.getElementById("modal");
+
+        const imagenGrande = document.getElementById("imagenGrande");
+
+        const imagenes = document.querySelectorAll(".card img");
+
+        imagenes.forEach(img => {
+
+            img.addEventListener("click", () => {
+                modal.style.display = "flex";
+                imagenGrande.src = img.src;
+            });
+        });
+
+        document.querySelector(".cerrar").addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

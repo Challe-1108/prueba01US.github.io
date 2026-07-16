@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceso de Matrícula - Universal Schools</title>
+    <link rel="stylesheet" href="estilos/matriculas.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Universal Schools</h1>
+    </header>
+
+    <section class="contenedor">
+
+        <h2>Proceso de Matrícula 2027</h2>
+
+        <div class="progreso">
+            <div id="barra"></div>
+        </div>
+
+        <form id="formMatricula">
+
+            <div class="bloque">
+
+                <h3>Datos del Estudiante</h3>
+                <h4 style="color:black; font-weight:normal;">Nombres:</h4>
+                <input type="text" style="padding-left: 10px;" id="nomEst" placeholder="  Juan" required>
+
+                <h4 style="color:black; font-weight:normal;">Apellidos:</h4>
+                <input type="text" style="padding-left: 10px;" id="apeEst" placeholder="  Obando" required>
+
+                <h4 style="color:black; font-weight:normal;">DNI:</h4>
+                <input type="text" style="padding-left: 10px;" id="dniEst" placeholder="  12345678" maxlength="8" required>
+
+            </div>
+
+            <div class="bloque">
+
+                <h3>Datos del Apoderado</h3>
+
+                <h4 style="color:black; font-weight:normal;">Nombres:</h4>
+                <input type="text" style="padding-left: 10px;" id="nomApo" placeholder="  Marcelino" required>
+
+                <h4 style="color:black; font-weight:normal;">Apellidos:</h4>
+                <input type="text" style="padding-left: 10px;" id="apeApo" placeholder="  Torres" required>
+
+                <h4 style="color:black; font-weight:normal;">DNI:</h4>
+                <input type="text" style="padding-left: 10px;" id="dniApo" placeholder="  12345678" maxlength="8" required>
+
+                <h4 style="color:black; font-weight:normal;">Número de contacto:</h4>
+                <input type="text" style="padding-left: 10px;" id="celApo" placeholder="  999 999 999" maxlength="9" required>
+
+            </div>
+
+            <div class="bloque">
+
+                <h3>Información Académica</h3>
+
+                <select id="nivel" required>
+                    <option value="">Seleccione nivel</option>
+                    <option value="primaria">Primaria</option>
+                    <option value="secundaria">Secundaria</option>
+                </select>
+
+                <select id="grado" required>
+                    <option value="">Seleccione grado</option>
+                </select>
+
+                <div id="sedeInfo"></div>
+
+            </div>
+
+            <button type="submit">Registrar Matrícula</button>
+
+        </form>
+
+        <div id="mensaje"></div>
+
+    </section>
+
+    <script>
+
+        const nivel = document.getElementById("nivel");
+        const grado = document.getElementById("grado");
+        const sedeInfo = document.getElementById("sedeInfo");
+
+        const camposTexto = ["nomEst", "apeEst", "nomApo", "apeApo"];
+
+        camposTexto.forEach(id => {
+
+            document.getElementById(id).addEventListener("input", function () {
+                this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, "");
+                actualizarBarra();
+            });
+        });
+
+        const camposNumericos = ["dniEst", "dniApo", "celApo"];
+
+        camposNumericos.forEach(id => {
+
+            document.getElementById(id)
+                .addEventListener("input", function () {
+                    this.value = this.value.replace(/\D/g, "");
+                    actualizarBarra();
+                });
+        });
+
+        nivel.addEventListener("change", function () {
+
+            grado.innerHTML = '<option value="">Seleccione grado</option>';
+            sedeInfo.innerHTML = "";
+
+            if (this.value === "primaria") {
+                for (let i = 1; i <= 6; i++) {
+                    grado.innerHTML += `<option>${i}° Primaria</option>`;
+                }
+            }
+
+            if (this.value === "secundaria") {
+                for (let i = 1; i <= 5; i++) {
+                    grado.innerHTML += `<option>${i}° Secundaria</option>`;
+                }
+            }
+            actualizarBarra();
+        });
+
+        grado.addEventListener("change", function () {
+
+            const texto = this.value;
+
+            if (texto.includes("Primaria")) {
+                sedeInfo.innerHTML = "Sede asignada: Huanchaco";
+            }
+            else if (texto.includes("1°") || texto.includes("2°") || texto.includes("3°")) {
+                sedeInfo.innerHTML = "Sede asignada: Miraflores";
+            } else {
+                sedeInfo.innerHTML = "Sede asignada: Zepita";
+            }
+            actualizarBarra();
+        });
+
+        const campos = document.querySelectorAll("input, select");
+
+        function actualizarBarra() {
+
+            let completos = 0;
+
+            campos.forEach(campo => {
+                if (campo.value.trim() !== "")
+                    completos++;
+            });
+            const porcentaje = (completos / campos.length) * 100;
+            document.getElementById("barra").style.width = porcentaje + "%";
+        }
+
+        document.getElementById("formMatricula").addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const dniEst = document.getElementById("dniEst").value;
+            const dniApo = document.getElementById("dniApo").value;
+            const celApo = document.getElementById("celApo").value;
+
+            if (dniEst.length !== 8 || dniApo.length !== 8) {
+                mostrarError("El DNI debe tener exactamente 8 dígitos.");
+                return;
+            }
+
+            if (celApo.length !== 9) {
+                mostrarError("El número de contacto debe tener 9 dígitos.");
+                return;
+            }
+
+            const alumno = document.getElementById("nomEst").value;
+
+            document.getElementById("mensaje").innerHTML =
+                `
+                    <div class="exito">
+                    <strong>¡Matrícula registrada!</strong>
+                    <br><br>
+                    Estimado(a) ${alumno},
+                    su preregistro ha sido realizado exitosamente.
+                    <br><br>
+                    Por favor acérquese a cualquiera
+                    de nuestras sedes para completar
+                    el proceso de matrícula.
+                    </div> `;
+
+            this.reset();
+            sedeInfo.innerHTML = "";
+            grado.innerHTML = '<option value="">Seleccione grado</option>';
+            document.getElementById("barra").style.width = "0%";
+
+        });
+
+
+        function mostrarError(texto) {
+            document.getElementById("mensaje").innerHTML = `<div class="error">❌ ${texto}</div> `;
+        }
+
+        let tiempo = 30;
+        let temporizador;
+
+        function reiniciarTemporizador() {
+
+            tiempo = 30;
+
+            clearTimeout(temporizador);
+
+            temporizador = setTimeout(() => {
+                if (confirm("Se detectó inactividad.\n\n¿Desea finalizar la sesión?")) {
+                    document.body.innerHTML = `
+                    <div class="pantalla-inactividad">
+                        <h1>Sesión Finalizada</h1>
+                        <p> La sesión fue cerrada por inactividad. </p>
+                        <button onclick="location.reload()"> Volver al formulario </button>
+                    </div>`;
+                }
+            }, 30000);
+        }
+
+        setInterval(() => {
+            if (tiempo > 0)
+                tiempo--;
+            document.getElementById("contador").textContent = tiempo;
+        }, 1000);
+
+        ["mousemove", "keypress", "click", "scroll"].forEach(evento => {
+            document.addEventListener(evento, reiniciarTemporizador);
+        });
+
+        reiniciarTemporizador();
+
+    </script>
+
+</body>
+
+</html>

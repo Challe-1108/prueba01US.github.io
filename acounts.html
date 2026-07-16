@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Universal Schools</title>
+    <link rel="stylesheet" href="estilos/acounts.css">
+</head>
+
+<body>
+
+    <div class="contenedor-login">
+
+        <div class="login-box">
+
+            <h1>Universal Schools</h1>
+            <h2>Aula Virtual</h2>
+
+            <form id="formLogin">
+
+                <label>Código de estudiante</label>
+                <input type="text" id="codigo" maxlength="4" placeholder="Ingrese código">
+
+                <label>Contraseña</label>
+                <input type="password" id="password" placeholder="Ingrese contraseña">
+
+                <div class="fake-recaptcha">
+
+                    <label>
+                        <input type="checkbox" id="captcha">
+                        No soy un robot
+                    </label>
+
+                    <div class="captcha-info">
+                        reCAPTCHA<br>
+                        Privacidad - Términos
+                    </div>
+
+                </div>
+
+                <button type="submit">
+                    Iniciar Sesión
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        document.getElementById("formLogin")
+            .addEventListener("submit", function (e) {
+
+                e.preventDefault();
+
+                const codigo =
+                    document.getElementById("codigo").value.trim();
+
+                const password =
+                    document.getElementById("password").value;
+
+                const captcha =
+                    document.getElementById("captcha").checked;
+
+                if (!/^\d{4}$/.test(codigo)) {
+                    alert("El código debe contener solo numeros.");
+                    return;
+                }
+
+                if (password.length < 8) {
+                    alert("La contraseña debe tener al menos 8 caracteres.");
+                    return;
+                }
+
+                if (!captcha) {
+                    alert("Debe marcar el recaptcha.");
+                    return;
+                }
+                
+                window.location.href = "aulavirtual.html";
+
+            });
+
+    </script>
+
+</body>
+
+</html>
